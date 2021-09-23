@@ -1,0 +1,12 @@
+{
+  "name": "excersizer",
+  "version": "1.0.0",
+  "description": "A health tracker app",
+  "main": "/scripts/main.js",
+  "scripts": {
+    "dev start": "nodemon /scripts/main"
+  },
+  "keywords": [],
+  "author": "Anna Stafford",
+  "license": "ISC"
+}

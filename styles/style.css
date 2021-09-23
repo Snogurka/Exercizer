@@ -1,0 +1,194 @@
+:root {
+  --main-bg-color: snow;
+  --main-color: blue;
+  --secondary-color: red;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--main-bg-color);
+  color: var(--main-color);
+  font-family: system-ui;
+  font-weight: bold;
+}
+
+/***************************************************/
+h1, h2{
+  width: 90%;
+  margin: 1% 5%;
+  text-align: center;
+}
+
+h1 {
+  color: var(--secondary-color);
+}
+h2 {
+  font-size: 100%;
+}
+
+input, select, button {
+  border-radius: 5px;
+  height: 32px;
+  border: 1px solid var(--main-color);
+}
+
+/***************************************************/
+/* buttons */
+#btnClear, #btnSave {
+  position: relative;
+  height: 2.5em;
+  width: 20%;
+  margin: 0 10%;
+  color: var(--main-bg-color);
+  font-size: medium;
+  border-style: outset;
+}
+
+#btnClear {
+  float: right;
+  background-color: var(--secondary-color)
+}
+
+#btnSave {
+  float: left;
+  background-color: var(--main-color);
+  border: 1px solid var(black);
+  box-shadow:  -1px 1px var(black),
+  -2px 2px var(--secondary-color);
+}
+
+/***************************************************/
+/* arrow-like buttons for toggling section display */
+.rollDn, .rollUp {
+  position: absolute;
+  right: 2vw;
+  margin-top: 10px;
+  width: 2em; 
+  height: 2em; 
+  border-left: 1em solid rgba(0, 0, 0, 0);
+  border-right: 1em solid rgba(0, 0, 0, 0);
+  background: var(--main-color);
+  /* above sections */
+  z-index: 2;
+}
+.rollUp {
+  border-top: none;
+  border-bottom: 2em solid var(--main-bg-color);
+  box-shadow: 0 1px var(--main-color);
+}
+.rollDn {
+  border-top: 2em solid var(--main-bg-color);
+  border-bottom: none;
+  box-shadow: 0 -1px var(--main-color);
+}
+
+section {
+  display: block;
+  width: 98vw;
+  margin: 1vw;
+  padding: 0 1vw 1vw 1vh;
+  /* under the roll button */
+  z-index: 1;
+}
+
+#workoutEntry {
+  border-style: outset;
+  background-color: rgba(0, 0, 255, 0.3);
+  color: var(--secondary-color);
+}
+#foodSleepEntry {
+  border-style: outset;
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.histElt, #chart, #chartDisplay {
+  display: none;
+  /* opacity: 0;
+  transition: all 3s; */
+}
+
+.histLook {
+  font-style: italic;
+  font-weight: normal;
+  /* text-align: center; */
+  /* color: var(--main-color); */
+  color: rgb(64, 64, 64);
+}
+
+.lblRow.histLook {
+  margin-top: 0.5em;
+}
+
+/* possible future animation */
+/* .histElt.visibleElt {
+  display: block;
+  opacity: .5;
+} */
+
+/***************************************************/
+/* section rows: labels and inputs */
+.lblRow {
+  margin-top: 1em;
+  padding-left: 7px;;
+}
+.row, .lblRow {
+  width: 100%;
+  display: flex;
+}
+
+.col2 {
+  column-gap: 2%;
+}
+.col2 > label, .col2 > input, .col2 > select {
+  width: 49%;
+}
+input[type="date"] {
+  width: 46vw;
+  vertical-align: bottom;
+}
+.col3sm {
+  column-gap: 20%;
+}
+.col3sm > label, .col3sm > input {
+  width: 20%;
+}
+.col3lg {
+  column-gap: 2%;
+}
+.col3lg > label, .col3lg > input {
+  width: 32%;
+}
+
+/***************************************************/
+input, textarea, select {
+  font-size: 16px;
+}
+
+input[type="number"] {
+  padding-left: 5px;
+  max-width: 7em;
+}
+
+/* select {
+  padding-left: 5px;
+} */
+
+textarea {
+  width: 94vw;
+}
+@media only screen and (min-width: 768px) { 
+
+  .rollDn, .rollUp {
+    margin-top: 2em;
+  }
+
+  select {
+    height: initial;
+  }
+
+}

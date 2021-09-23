@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track It</title>
+  <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+  <h1>Exercizer</h1>
+  <!-- <h2>Track yourself. &nbsp;See results.</h2> -->
+  <!-- todo: change the look of the subtitle: can be image on the background, background font text, animation, etc. -->
+  <h2>Track yourself. &nbsp;See results.</h2>
+  <form>
+  <!-- <form onclick="formClick(event)"> -->
+  
+    <!-- history -->
+    <section>
+      <div class="lblRow col2">
+        <label for="dateFrom" class="histLook">History</label>
+        <label for="dateTo" id="lblDateTo" class="histElt">...to</label>
+      </div>
+
+      <div class="row col2">
+        <input type="date" name="dateFrom" id="dateFrom" class="histLook" oninput="pullDayHistory(event)">
+        <input type="date" name="dateTo" id="dateTo" class="histElt" oninput="pullRangeHistory()">
+      </div>
+    </section>
+
+    <!-- chart -->
+    <button class="rollUp" type="button" id="chartDisplay" onclick="displaySection(event.target,'chart')"></button>
+    <section id="chart">
+      <canvas id="myChart" style="width:100%;max-width:700px"></canvas>
+    </section>
+
+    <!-- new entry -->
+    <button class="rollUp" type="button" onclick="displaySection(event.target,'workoutEntry')"></button>
+    <section id="workoutEntry">
+
+      <label for="newDate" class="lblRow newElt">New Date</label>
+      <input type="date" name="newDate" id="newDate" class="newElt">
+
+      <div class="lblRow col2 histElt">
+        <label for="muscleGroup">Muscle Group</label>
+        <label for="activity">Activity</label>
+      </div>
+
+      <div class="row col2 newElt">
+        <input type="text" name="muscleGroup" id="muscleGroup">
+        <input type="text" name="activity" id="activity">
+        <!-- <select name="muscleGroup" class="histElt" size="4" multiple=true>
+          <option value="blank">--</option>
+          <option value="chest">chest</option>
+          <option value="back">back</option>
+          <option value="tri">arms</option>
+          <option value="core">core</option>
+          <option value="legs">legs</option>
+          <option value="new">new</option>
+        </select>
+        <select name="activity" class="histElt" size="4">
+          <option value="blank">--</option>
+          <option value="pushUps">push-ups</option>
+          <option value="sitUps">sit-ups</option>
+          <option value="benchPress">bench press</option>
+        </select> -->
+      </div>
+
+      <div class="lblRow col3lg histElt">
+        <label for="weight">Weight</label>
+        <label for="sets">Sets</label>
+        <label for="reps">Reps</label>
+      </div>
+      
+      <div class="row col3lg newElt">
+        <input type="number" name="weight" id="weight" min="0">
+        <input type="number" name="sets" id="sets"  min="0">
+        <input type="number" name="reps" id="reps"  min="0">
+      </div>
+
+      <label for="comments" class="lblRow histElt">Comments</label>
+      <textarea name="comments" id="comments" rows="2" class="newElt"></textarea>
+      
+    </section>
+
+    <!-- food and sleep -->
+    <button class="rollUp" type="button" onclick="displaySection(event.target,'foodSleepEntry')"></button>
+    <section id="foodSleepEntry">
+      <label for="sleepHours" class="lblRow histElt">Sleep Hours</label>
+      <input type="number" name="sleepHours" id="sleepHours" min="0" class="newElt">
+
+      <div class="lblRow col3lg histElt">
+        <label for="breakfast">Breakfast</label>
+        <label for="lunch">Lunch</label>
+        <label for="dinner">Dinner</label>
+      </div>
+      
+      <div class="row col3lg newElt">
+        <input name="breakfast" id="breakfast">
+        <input name="lunch" id="lunch">
+        <input name="dinner" id="dinner">
+      </div>
+    </section>
+
+    <section>
+      <button id="btnSave" type="submit">save</button>
+      <!-- button types: reset only clears user inputs, button does nothing, no type - resets everything-->
+      <button id="btnClear">clear</button>
+    </section>
+  </form>
+</body>
+
+<script src="scripts/main.js"></script>
+<script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
+
+</html>
