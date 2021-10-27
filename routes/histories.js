@@ -32,7 +32,7 @@ router.get('/', async (req, res) => {
     });
     
   } catch {
-    console.log("get history for a day, caught an error");
+    console.log("get history for a day caught an error");
     res.redirect('/')
   }
 })

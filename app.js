@@ -22,7 +22,7 @@ app.use(express.urlencoded({extended:false}));
 const mongoose = require('mongoose');
 mongoose.connect(process.env.DATABASE_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 const db = mongoose.connection;
-db.on('error', error => console.log(error, 'error connecting via mongoose'));
+db.on('error', error => console.log(error));
 db.once('open', () => console.log('connected via mongoose'));
 
 const indexRouter = require('./routes/index');
