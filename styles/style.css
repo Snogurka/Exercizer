@@ -1,9 +1,11 @@
 :root {
-  --main-bg-color: snow;
-  --main-color: blue;
+  --main-color: rgb(65,65,65);
+  --primary-color: blue;
   --secondary-color: red;
+  --main-bg-color: snow;
+  --blue-bg-color: #d7e4f7;
+  --red-bg-color: #fce6e0; 
 }
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,18 +14,17 @@
 
 body {
   background-color: var(--main-bg-color);
-  color: var(--main-color);
+  color: var(--primary-color);
   font-family: system-ui;
   font-weight: bold;
+  min-height: 100%;
 }
-
 /***************************************************/
 h1, h2{
   width: 90%;
   margin: 1% 5%;
   text-align: center;
 }
-
 h1 {
   color: var(--secondary-color);
 }
@@ -31,15 +32,9 @@ h2 {
   font-size: 100%;
 }
 
-input, select, button {
-  border-radius: 5px;
-  height: 32px;
-  border: 1px solid var(--main-color);
-}
-
 /***************************************************/
 /* buttons */
-#btnClear, #btnSave {
+#btnClear, #btnSave, #alertMsg button {
   position: relative;
   height: 2.5em;
   width: 20%;
@@ -48,147 +43,217 @@ input, select, button {
   font-size: medium;
   border-style: outset;
 }
-
 #btnClear {
   float: right;
   background-color: var(--secondary-color)
 }
-
-#btnSave {
+#btnSave{
   float: left;
-  background-color: var(--main-color);
+  background-color: var(--primary-color);
   border: 1px solid var(black);
   box-shadow:  -1px 1px var(black),
   -2px 2px var(--secondary-color);
 }
 
 /***************************************************/
-/* arrow-like buttons for toggling section display */
-.rollDn, .rollUp {
+/* arrow-like button for toggling section display */
+.roll, .more {
   position: absolute;
   right: 2vw;
-  margin-top: 10px;
-  width: 2em; 
-  height: 2em; 
-  border-left: 1em solid rgba(0, 0, 0, 0);
-  border-right: 1em solid rgba(0, 0, 0, 0);
-  background: var(--main-color);
+  height: 2em;
+  background: none;
   /* above sections */
   z-index: 2;
 }
-.rollUp {
-  border-top: none;
-  border-bottom: 2em solid var(--main-bg-color);
-  box-shadow: 0 1px var(--main-color);
+.roll {
+  margin-top: -3px;
+  width: 2em; 
+  border: 0.5px solid var(--main-color);
 }
-.rollDn {
-  border-top: 2em solid var(--main-bg-color);
-  border-bottom: none;
-  box-shadow: 0 -1px var(--main-color);
+/* a button for additional workouts for the same day */
+.more {
+  transition-property: all;
+  transition-duration: 0.5s;
+  width: 3em; 
+  color: var(--secondary-color);
 }
 
+/***************************************************/
+#alertMsg {
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--primary-color);
+  position: fixed;
+  top: 33vh;
+  height: 20vh;
+  /* width: 90%; */
+  margin: 5%;
+  opacity: 0;
+  transition-property: all;
+  transition-duration: 0.5s;
+  padding: 5px;
+  text-align: center;
+  z-index: 0;
+}
+#alertMsg button {
+  margin-top: 3vh;
+  color: var(--main-color);
+}
+#dateFromLbl, #alertMsg {
+  color: var(--main-color);
+  font-weight: normal;
+  font-style: italic;
+}
+#dateFrom, #dateTo {
+  border: 0.5px solid var(--main-color);
+}
+
+/***************************************************/
 section {
   display: block;
   width: 98vw;
-  margin: 1vw;
-  padding: 0 1vw 1vw 1vh;
-  /* under the roll button */
-  z-index: 1;
+  min-height: 2em;
+  margin: 0 1vw;
+  padding: 1vw;
+  /* border: 0.5px solid; */
+  z-index: 1; /* under the roll button */
 }
 
-#workoutEntry {
-  border-style: outset;
-  background-color: rgba(0, 0, 255, 0.3);
+/***************************************************/
+.workoutEntry {
+  background-color: var(--blue-bg-color);
   color: var(--secondary-color);
 }
-#foodSleepEntry {
-  border-style: outset;
-  background-color: rgba(255, 0, 0, 0.3);
+.foodSleepEntry {
+  background-color: var(--red-bg-color);
+}
+#buttonSection {
+  height: 3em;
+  margin: 5% 20%;
 }
 
-.histElt, #chart, #chartDisplay {
-  display: none;
-  /* opacity: 0;
-  transition: all 3s; */
+/* class histElt, used for displaying input fields on the history view */
+.histElt {
+  border: none;
+}
+input.histElt {
+  height: 1.2em;
+  /* overflow-y: visible;
+  overflow-wrap: break-word; */
+}
+.workoutEntry .histElt {
+  background-color: var(--blue-bg-color);
+}
+.foodSleepEntry .histElt {
+  background-color: var(--red-bg-color);
 }
 
+/* used in functionality.js for animated display of labels */
 .histLook {
+  color: var(--main-color);
   font-style: italic;
+  margin-top: 5px;
   font-weight: normal;
-  /* text-align: center; */
-  /* color: var(--main-color); */
-  color: rgb(64, 64, 64);
+  height: 0;
+  opacity: 0;
+  transition-property: all;
+  transition-duration: 0.7s;
+  /* instead of the above, can do all transitions together */
+  /* transition-property: all;
+  transition-duration: 2s;
+  transition-timing-function: ease-in-out; */
 }
-
-.lblRow.histLook {
-  margin-top: 0.5em;
+.lblVisible {
+  margin-top: 1em;
+  height: 1.1em;
+  opacity: 1;
 }
-
-/* possible future animation */
-/* .histElt.visibleElt {
-  display: block;
-  opacity: .5;
-} */
 
 /***************************************************/
 /* section rows: labels and inputs */
 .lblRow {
-  margin-top: 1em;
-  padding-left: 7px;;
+  margin-top: 0.5em;
+  padding-left: 5px;
 }
 .row, .lblRow {
   width: 100%;
   display: flex;
 }
-
-.col2 {
-  column-gap: 2%;
+.col2, .col3 {
+  column-gap: 1.5vw;
 }
-.col2 > label, .col2 > input, .col2 > select {
+.col2 > label, .col2 > input {
   width: 49%;
+  /* width: 47vw;  */
+}
+.col3 > label, .col3 > input {
+  width: 31vw;
+}
+/***************************************************/
+button, input, textarea {
+  font-family: inherit;
+  font-size: 100%;
+  border-radius: 5px;
+  height: 32px;
+  border: 1px solid var(--primary-color);
+}
+input, textarea {
+  color: var(--main-color);
+  font-size: 16px;
+  padding-left: 5px;
+  /* above alert message */
+  z-index: 2; 
 }
 input[type="date"] {
-  width: 46vw;
+  width: 47vw;
   vertical-align: bottom;
 }
-.col3sm {
-  column-gap: 20%;
-}
-.col3sm > label, .col3sm > input {
-  width: 20%;
-}
-.col3lg {
-  column-gap: 2%;
-}
-.col3lg > label, .col3lg > input {
-  width: 32%;
-}
-
-/***************************************************/
-input, textarea, select {
-  font-size: 16px;
-}
-
-input[type="number"] {
-  padding-left: 5px;
-  max-width: 7em;
-}
-
-/* select {
+/* input[type="number"] {
   padding-left: 5px;
 } */
-
 textarea {
-  width: 94vw;
+  width: 100%;
+  padding-top: 10px;
+  resize: vertical;
 }
-@media only screen and (min-width: 768px) { 
 
-  .rollDn, .rollUp {
-    margin-top: 2em;
-  }
-
-  select {
-    height: initial;
-  }
-
+footer {
+  color: dimgray;
+  font-size: smaller;
+  font-weight: normal;
+  position: relative;
+  /* bottom: 0; */
+  padding: 2vw;
+  height: 2em;
+  /* margin-top: -2em; */
 }
+
+/* #chart, #chartDisplay,  */
+.hidden, .lgScreenMsg  {
+  display: none;
+  /* opacity: 0;
+  transition: all 3s; */
+}
+
+/* size restriction for desktop */
+@media only screen and (min-width: 600px) { 
+
+    section {
+      width: 60%;
+      margin: auto 20%;
+    }
+    .roll, .more {
+      right: 21vw;
+    }
+    .col2 > label, .col2 > input {
+      width: 49%;
+    }
+    .col3 > label, .col3 > input {
+      width: 31.8%;
+    }
+    input[type="date"] {
+      width: 28.2vw;
+    }
+    .lgScreenMsg {
+      display: block;
+    }
+  }

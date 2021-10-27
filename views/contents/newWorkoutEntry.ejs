@@ -1,0 +1,28 @@
+<!-- new entry section -->
+<div class="workoutSubEntry">
+  <div class="lblRow col2">
+    <label for="muscleGroup">Muscle Group</label>
+    <label for="activity">Activity</label>
+  </div>
+
+  <div class="row col2">
+    <input type="text" name="muscleGroup" autocomplete="on" required>
+    <input type="text" name="activity" autocomplete="on" required>
+  </div>
+
+  <div class="lblRow col3 ">
+    <label for="weight">Weight</label>
+    <label for="sets">Sets</label>
+    <label for="reps">Reps</label>
+  </div>
+  
+  <div class="row col3">
+    <input type="number" name="weight" min="0">
+    <input type="number" name="sets" min="0" required>
+    <input type="number" name="reps" min="0" required>
+  </div>
+
+  <label for="comments" class="lblRow">Comments</label>
+  <textarea name="comments" rows="2" class="newElt"></textarea>
+</div>
+<hr>

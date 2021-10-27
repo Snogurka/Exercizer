@@ -1,0 +1,7 @@
+<%# this ejs file is served/rendered on success or failure of making an workout/nutrition entry into MongoDb and should have the text that displays success or failure; the message should be displayed as a pop-up? for a second or two; could also be a little green or red widget displayed for a brief period of time with a message displayed inside or on tap %> 
+
+<!-- <div class="histElt">message</div> -->
+
+<% if (locals.msg != null) { %> 
+  <%= msg %>
+<% } %> 

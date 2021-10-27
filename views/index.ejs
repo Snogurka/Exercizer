@@ -1,0 +1,15 @@
+<form action="" method="POST">
+    <!-- history pull -->
+    <section>
+      <div class="lblRow col2">
+        <label for="dateFrom" id="dateFromLbl">History</label>
+      </div>
+      <div class="row col2">
+        <input type="date" name="dateFrom" id="dateFrom" oninput="pullHistory(event.target)">
+      </div>
+    </section>
+
+  <%- include("contents/newDateEntry.ejs") %>
+  <%- include("contents/newFuelEntry.ejs") %>
+  <%- include("contents/mainBtnSect.ejs") %> 
+</form>

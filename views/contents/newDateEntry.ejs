@@ -1,0 +1,18 @@
+<!-- new entry date section -->
+<section class="workoutEntry">
+  <button class="roll" type="button" onclick="displaySection(event.target)">-</button>
+
+  <div class="lblRow col2">
+    <label for="entryDate" class="lblRow">New Date</label>
+  </div>
+  <div class="row col2">
+    <input type="date" name="entryDate" dateonly=true required onblur="checkDateUniqueness(event.target)">
+    <button class="more" type="button" onclick="moreEntries(event.target)">more</button>
+    <button class="more hidden" type="button" onclick="lessEntries(event.target)">less</button>
+  </div>
+
+<!-- to warn user of existing record dates, pull recorded dates  into a hidden array -->
+<input type="hidden" id="recordedDates" value="<%= entryDates %> ">
+<%- include ("newWorkoutEntry.ejs") %>
+<%- include("../partials/alert.ejs") %>
+</section>

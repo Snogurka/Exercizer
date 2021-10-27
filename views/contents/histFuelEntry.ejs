@@ -1,0 +1,33 @@
+<!-- entryOutput comes from history.ejs -->
+<!-- meal and sleep entry section, hidden if no values are stored -->
+<section 
+<% if(entryOutput.sleepHours || entryOutput.breakfast || entryOutput.lunch || entryOutput.dinner ) { %> 
+  class="foodSleepEntry" 
+<% } else { %> 
+  class="foodSleepEntry hidden" 
+<% } %>>
+  <button class="roll" type="button" onclick="displaySection(event.target)">-</button>
+  <div class="lblRow col3 histLook">
+  <label for="sleepHours">Sleep Hours</label>
+  </div>
+  <div class="row col3">
+  <input name="sleepHours" 
+  <% if(entryOutput.sleepHours) { %> 
+    class="histElt" 
+  <% } else { %> 
+      class="histElt hidden" 
+  <% } %>
+  value="Sleep: <%= entryOutput.sleepHours %> hrs" readonly>
+  </div>
+  <div class="lblRow col3 histLook">
+    <label for="breakfast">Breakfast</label>
+    <label for="lunch">Lunch</label>
+    <label for="dinner">Dinner</label>
+  </div>
+  <div class="row col3">
+    <input name="breakfast" class="histElt" value="B: <%= entryOutput.breakfast %>" readonly>
+    <input name="lunch" class="histElt" value="L: <%= entryOutput.lunch %>" readonly>
+    <input name="dinner" class="histElt" value="D: <%= entryOutput.dinner %>" readonly>
+  </div>
+</section>
+<hr>

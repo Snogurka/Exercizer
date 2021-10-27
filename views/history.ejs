@@ -1,0 +1,23 @@
+<!-- <form action="" method="post"> -->
+<form action="history" method="get">
+  <!-- history pull -->
+  <section>
+    <div class="lblRow col2">
+      <label for="dateFrom">History</label>
+      <label for="dateTo" id="lblDateTo">...to</label>
+    </div>
+    <div class="row col2">
+      <input type="date" name="dateFrom" id="dateFrom" oninput="pullHistory(event.target)" value="<%= startDate %>">
+      <input type="date" name="dateTo" id="dateTo" oninput="pullHistory(event.target)" value="<%= endDate %>">
+    </div>
+  </section>
+  <%# if(endDate) { %>
+    <%#- include("contents/chart.ejs") %>
+  <%# } %>
+<!-- outputSet comes from histories.js -->
+  <% outputSet.forEach(entry => { %>
+    <%- include("contents/histDateEntry.ejs", {entryOutput: entry}) %>
+    <%- include("contents/histFuelEntry.ejs", {entryOutput: entry}) %>
+  <% }) %>
+  <%- include("contents/editBtnSect.ejs") %>
+</form>

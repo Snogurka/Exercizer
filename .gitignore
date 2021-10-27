@@ -1,3 +1,8 @@
 .DS_Store
 DS_Store
 /backup
+OutLine.txt
+node_modules
+settings.json
+.env
+index.html
