@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const histSchema = new mongoose.Schema({
-  entryDate: {
+entryDate: { 
     type: Date, 
     required: true
     ,unique: true

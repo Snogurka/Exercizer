@@ -1,14 +1,23 @@
+//in mobile simulator - oninput fires as soon as the date is clicked, thus set a first click var to check if it's a first click
+var firstClick = true;
+
+
 //change the class name of a sent element from old to new
 function changeClass(elt, oldClassNm, newClassNm) {
   elt.classList.remove(oldClassNm);
   elt.classList.add(newClassNm);
 }
 
+//find and return the host part of the url - if there is no history, return the full string, otherwise return the portion preceeding history
+function urlRoot() {
+  return window.location.href.search("history")===-1?window.location.href:window.location.href.slice(0, window.location.href.search("history"));
+}
+
 //response to a roll up / roll down: add/remove class hidden to all except 1st  children of the clicked button's parent element-section; the clicked button is the only remaining visible element, thus the height of the parent section is reduced to min-height set in style, 2em;
 function displaySection (caller) {
 
   //not done yet
-  //chart elements have inline styling, thus, instead of using my "hidden" class, to minimize chart section, I have to set its height and opacity
+  //chart elements have inline styling, thus, instead of using "hidden" class, to not display chart section, height and opacity are used
   // if (caller.innerText==="-") {
   //   caller.parentElement.style.height = "2.5em";
   //   Array.from(caller.parentElement.children).forEach(x => 
@@ -39,18 +48,7 @@ function displaySection (caller) {
   }
 }
 
-//toggle display
-function setDisplayType(elt, displayType) {
-  if (!displayType) {
-    displayType = window.getComputedStyle(elt).display!="none"?"none":"block";
-  }
-  elt.style.display = displayType;
-
-  //possible future animation
-  // elt.classList.add("visibleElt");
-}
-
-//subsection of fields for multiple entries on a single day
+//subsection of fields for multiple entries on a single day - a click on "more" subsections button
 function moreEntries(tgt) {
   //if this is the first click on the "more" button, display the less button and shift more button to the left
   const btnLess = document.getElementsByClassName("more")[1];
@@ -64,7 +62,7 @@ function moreEntries(tgt) {
   subEntry.after(newDiv);
 }
 
-//click on "less" subsections button
+//a click on "less" subsections button
 function lessEntries(tgt) {
   const subEntries = document.getElementsByClassName("workoutSubEntry");
   // if there is only one subsection, remove it and hide the "less" button, otherwise just remove a subsection 
@@ -75,33 +73,9 @@ function lessEntries(tgt) {
   subEntries[0].parentElement.removeChild(subEntries[subEntries.length-1]);
 }
 
-//when a new entry is made, ensure there isn't already an entry for that date
-function checkDateUniqueness(tgt) {
-  const dateKeeperField = document.getElementById("recordedDates").value.replace(/ entryDate: |{| }/g,"").split(",").map(x=>x.slice(0,10));
-  console.log(dateKeeperField);
-  
-  if(dateKeeperField.includes(tgt.value)){
-    // animated opacity appearance instead of using display via hidden class
-    const alertMsgBox = document.getElementById("alertMsg");
-    alertMsgBox.style.opacity = "1";
-    alertMsgBox.style.zIndex = 3;
-    // document.getElementById("alertMsg").classList.remove("hidden");
-  }
-}
-
-//todo: needs work
-// function deleteEntry(tgt) {
-
-//   console.log("delete an entry");
-
-//   window.location.replace(`http://localhost:3002/history/delete?_id=${tgt.parentElement.getElementsByClassName("deleteID")[0].value}`);
-
-//   window.location.replace(`http://localhost:3002/history?dateFrom=${tgt.value}`);
-// }
-
 //go back to the new entry screen
 function btnBackClk() {
-  window.location.replace("http://localhost:3002/");
+  window.location.replace(urlRoot());
 }
 
 //show fields for editing historical entry
@@ -145,15 +119,29 @@ function btnEditClk(tgt) {
 
 }
 
-//mobile simulator - oninput fires as soon as the date is clicked, thus set a first click var to check if it's a first click
-var firstClick = true;
+//when a new entry is made, ensure there isn't already an entry for that date
+function checkDateUniqueness(tgt) {
+  const dateKeeperField = document.getElementById("recordedDates").value.replace(/ entryDate: |{| }/g,"").split(",").map(x=>x.slice(0,10));
+  
+  if(dateKeeperField.includes(tgt.value)){
+    // animated opacity appearance instead of using display via hidden class
+    const alertMsgBox = document.getElementById("alertMsg");
+    alertMsgBox.children[0].innerText = "There is already an entry for this date, would you like to view, edit or delete it?";
+    alertMsgBox.style.opacity = "1";
+    alertMsgBox.style.zIndex = 3;
+    // document.getElementById("alertMsg").classList.remove("hidden");
+  }
+}
 
+//the following function runs if a user tries to enter a date that already has been recorded and chooses to view that in history
 function triggerHistory() {
   firstClick = false;
-  const histDate = document.getElementById("dateFrom");
-  histDate.value = "2021-10-01";
-  pullHistory(histDate)
+  const entryDateValue = document.getElementsByName("entryDate")[0].value;
+  const histDateField = document.getElementById("dateFrom");
+  histDateField.value = entryDateValue;
+  pullHistory(histDateField);
 }
+
 //! depending on a call and parameters, display/hide new or historical elements and adjust their styling accordingly via adding/removing a class
 function pullHistory(tgt) {
 
@@ -164,11 +152,11 @@ function pullHistory(tgt) {
       return;
     }
   }
-
+  
   if (tgt.id === "dateFrom") {
-    window.location.replace(`http://localhost:3002/history?dateFrom=${tgt.value}`);
+    window.location.replace(`${urlRoot()}history?dateFrom=${tgt.value}`);
   } else {
-    window.location.replace(`http://localhost:3002/history?dateFrom=${document.getElementById("dateFrom").value}&dateTo=${tgt.value}`);
+    window.location.replace(`${urlRoot()}history?dateFrom=${document.getElementById("dateFrom").value}&dateTo=${tgt.value}`);
   }
 }
 
