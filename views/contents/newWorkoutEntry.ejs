@@ -1,7 +1,9 @@
 <!-- new entry section -->
 <div class="workoutSubEntry">
   <div class="lblRow col2">
-    <label for="muscleGroup">Muscle Group</label>
+    <!-- 💪🦵 -->
+    <label for="muscleGroup">Muscles Group</label>
+    <!-- 🏊‍♂️ 🏋️‍♀️ 🤼 🚴 🤸‍♂️ ⛷ 🏈 ⚽️ 🏀 -->
     <label for="activity">Activity</label>
   </div>
 
@@ -11,18 +13,24 @@
   </div>
 
   <div class="lblRow col3 ">
-    <label for="weight">Weight</label>
+    <label for="weight">Weight(lbs)</label>
     <label for="sets">Sets</label>
+    <!-- , Steps, Laps -->
     <label for="reps">Reps</label>
   </div>
   
   <div class="row col3">
-    <input type="number" name="weight" min="0">
-    <input type="number" name="sets" min="0" required>
+    <input type="number" step="0.01" name="weight" min="0">
+    <input type="number" step="0.01" name="sets" min="0" required>
     <input type="number" name="reps" min="0" required>
   </div>
 
   <label for="comments" class="lblRow">Comments</label>
   <textarea name="comments" rows="2" class="newElt"></textarea>
+  <hr>
+
+  <div class="row col2">
+    <button class="more" type="button" onclick="moreEntries(event.target)">+☟</button>
+    <button class="more hidden" type="button" onclick="lessEntries(event.target)">-☝</button>
+  </div>
 </div>
-<hr>

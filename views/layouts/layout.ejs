@@ -8,9 +8,11 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <%- include("../partials/header.ejs") %>
-  <!-- message section goes here, not done -->
-  <%#- include("../partials/message.ejs") %>
+  <%- include("../partials/settings.ejs") %>
+  <%- include("../partials/header.ejs") %> 
+
+  <!-- message section -->
+  <%- include("../partials/message.ejs") %>
 
   <!-- body is the index.ejs or history.ejs file -->
   <%- body %>

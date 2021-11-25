@@ -1,18 +1,25 @@
 const mongoose = require("mongoose");
 
 const histSchema = new mongoose.Schema({
-entryDate: { 
+  athleteName: {
+    type: String, 
+    required: true,
+    default: 'the_athlete'
+  },
+  entryDate: { 
     type: Date, 
-    required: true
-    ,unique: true
+    required: true, 
+    unique: true
   },
   muscleGroup: {
     type: Array, 
-    required: true
+    required: true,
+    trim: true
   },
   activity: {
     type: Array, 
-    required: true
+    required: true,
+    trim: true
   },
   weight: {
     type: Array, 

@@ -1,5 +1,6 @@
 :root {
-  --main-color: rgb(65,65,65);
+  --main-color: dimgray;
+  /* --main-color: rgb(65,65,65); */
   --primary-color: blue;
   --secondary-color: red;
   --main-bg-color: snow;
@@ -11,12 +12,11 @@
   margin: 0;
   padding: 0;
 }
-
 body {
   background-color: var(--main-bg-color);
   color: var(--primary-color);
   font-family: system-ui;
-  font-weight: bold;
+  font-weight: normal;
   min-height: 100%;
 }
 /***************************************************/
@@ -37,18 +37,18 @@ h2 {
 #btnClear, #btnSave, #alertMsg button {
   position: relative;
   height: 2.5em;
-  width: 20%;
+  width: 4em;
   margin: 0 10%;
   color: var(--main-bg-color);
   font-size: medium;
   border-style: outset;
 }
 #btnClear {
-  float: right;
+  float: left;
   background-color: var(--secondary-color)
 }
 #btnSave{
-  float: left;
+  float: right;
   background-color: var(--primary-color);
   border: 1px solid var(black);
   box-shadow:  -1px 1px var(black),
@@ -56,49 +56,85 @@ h2 {
 }
 
 /***************************************************/
-/* arrow-like button for toggling section display */
-.roll, .more {
-  position: absolute;
-  right: 2vw;
+/* buttons for toggling section display */
+/* .roll,  */
+.more, .settings {
+  /* position: absolute; */
+  right: 2.5vw;
   height: 2em;
   background: none;
   /* above sections */
   z-index: 2;
 }
-.roll {
+/* .roll {
   margin-top: -3px;
   width: 2em; 
   border: 0.5px solid var(--main-color);
-}
+} */
 /* a button for additional workouts for the same day */
 .more {
   transition-property: all;
-  transition-duration: 0.5s;
+  transition-duration: 200ms;
   width: 3em; 
-  color: var(--secondary-color);
+  color: var(--main-color);
+}
+.editingButtons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+/* styling for the date row of history view */
+.dateShade {
+  box-shadow: -2px -1px 10px var(--main-color);
+  border-radius: 5px 0 0 5px;
+}
+/* settings include login, themes */
+.settings {
+  position: absolute;
+  margin-top: 10px;
+  width: 2em; 
+  border: 0.5px solid var(--main-color);
+}
+#settingsMenu {
+  position: fixed;
+  height: 0;
+  opacity: 0;
+  color: var(--main-color);
+  font-weight: normal;
+  transition-property: all;
+  transition-duration: 500ms;
+}
+#settingsMenu li {
+  list-style-image: none;
 }
 
 /***************************************************/
-#alertMsg {
+/* alert that an entry already exists, message - any other messages, such as success, failure, etc. */
+#alertMsg, #message {
   background-color: var(--main-bg-color);
   border: 1px solid var(--primary-color);
   position: fixed;
   top: 33vh;
-  height: 20vh;
-  /* width: 90%; */
-  margin: 5%;
-  opacity: 0;
-  transition-property: all;
-  transition-duration: 0.5s;
-  padding: 5px;
+  margin-left: 10%;
+  margin-right: auto;
+  width: 80%;
+  opacity: 1;
+  transition-property: opacity;
+  transition-duration: 200ms;
+  padding: 1em;
   text-align: center;
-  z-index: 0;
+  z-index: 3;
 }
-#alertMsg button {
+#alertMsg {
+  opacity: 0;
+  z-index: -1;
+}
+#alertMsg > button {
   margin-top: 3vh;
   color: var(--main-color);
 }
-#dateFromLbl, #alertMsg {
+
+#dateFromLbl, #alertMsg, #settingsMenu li {
   color: var(--main-color);
   font-weight: normal;
   font-style: italic;
@@ -121,17 +157,22 @@ section {
 /***************************************************/
 .workoutEntry {
   background-color: var(--blue-bg-color);
-  color: var(--secondary-color);
+}
+.workoutSubEntry {
+  border-radius: 5px 5px 0 5px;
+  /* todo: need a border that dissappears towards top left corner */
+  box-shadow: -0px -0px 2px var(--main-color);  
 }
 .foodSleepEntry {
   background-color: var(--red-bg-color);
+  color: var(--secondary-color);  
 }
 #buttonSection {
   height: 3em;
   margin: 5% 20%;
 }
 
-/* class histElt, used for displaying input fields on the history view */
+/* class histElt, used for displaying input fields in the history view */
 .histElt {
   border: none;
 }
@@ -156,11 +197,8 @@ input.histElt {
   height: 0;
   opacity: 0;
   transition-property: all;
-  transition-duration: 0.7s;
-  /* instead of the above, can do all transitions together */
-  /* transition-property: all;
-  transition-duration: 2s;
-  transition-timing-function: ease-in-out; */
+  transition-duration: 200ms;
+  transition-timing-function: ease-in-out;
 }
 .lblVisible {
   margin-top: 1em;
@@ -173,20 +211,21 @@ input.histElt {
 .lblRow {
   margin-top: 0.5em;
   padding-left: 5px;
+  /* height: 2em; */
+  align-items: center;
 }
 .row, .lblRow {
   width: 100%;
   display: flex;
 }
-.col2, .col3 {
-  column-gap: 1.5vw;
+.col2, .col3, .editingButtons {
+  column-gap: 2%;
 }
-.col2 > label, .col2 > input {
+.col2 > * {
   width: 49%;
-  /* width: 47vw;  */
 }
 .col3 > label, .col3 > input {
-  width: 31vw;
+  width: 32%;
 }
 /***************************************************/
 button, input, textarea {
@@ -194,17 +233,16 @@ button, input, textarea {
   font-size: 100%;
   border-radius: 5px;
   height: 32px;
-  border: 1px solid var(--primary-color);
+  border: 1px solid var(--main-bg-color);
 }
 input, textarea {
   color: var(--main-color);
   font-size: 16px;
   padding-left: 5px;
-  /* above alert message */
-  z-index: 2; 
+  text-align: left; 
 }
 input[type="date"] {
-  width: 47vw;
+  width: 47.5vw;
   vertical-align: bottom;
 }
 /* input[type="number"] {
@@ -235,13 +273,14 @@ footer {
 }
 
 /* size restriction for desktop */
-@media only screen and (min-width: 600px) { 
+@media only screen and (min-width: 900px) { 
 
     section {
       width: 60%;
       margin: auto 20%;
     }
-    .roll, .more {
+    /* .roll,  */
+    .more {
       right: 21vw;
     }
     .col2 > label, .col2 > input {

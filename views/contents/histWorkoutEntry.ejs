@@ -1,31 +1,32 @@
 <!-- entry section -->
 <!-- entryOutput comes from history.ejs -->
+<div class="workoutSubEntry">
+  <div class="lblRow col2 histLook">
+    <label for="muscleGroup">Muscle Group</label>
+    <label for="activity">Activity</label>
+  </div>
+  <div class="row col2">
+    <input type="text" name="muscleGroup" class="histElt" value="<%= entryOutput.muscleGroup[counter] %>" readonly>
+    <input type="text" name="activity" list="activities" class="histElt" value="<%= entryOutput.activity[counter] %>" readonly>
+  </div>
 
-<div class="lblRow col2 histLook">
-  <label for="muscleGroup">Muscle Group</label>
-  <label for="activity">Activity</label>
+  <div class="lblRow col3 histLook">
+    <label for="weight">Weight(lbs)</label>
+    <label for="sets">Sets</label>
+    <label for="reps">Reps</label>
+  </div>
+  <div class="row col3">
+    <input name="weight" class="histElt" value="Weight(lbs): <%= entryOutput.weight[counter] %>" readonly>
+    <input name="sets" class="histElt" value="Sets: <%= entryOutput.sets[counter] %>" readonly>
+    <input name="reps" class="histElt" value="Reps: <%= entryOutput.reps[counter] %>" readonly>
+  </div>
+  <!-- comments are hidden if no value is stored -->
+  <label for="comments" class="lblRow histLook">Comments</label>
+  <textarea name="comments" rows="2" 
+  <% if(entryOutput.comments[counter].length) { %> 
+    class="histElt" 
+  <% } else { %> 
+    class="histElt hidden" 
+  <% } %> 
+  readonly><% if(entryOutput.comments) { %>Comments: <%= entryOutput.comments[counter] %><% } %></textarea>
 </div>
-<div class="row col2">
-  <input type="text" name="muscleGroup" class="histElt" value="<%= entryOutput.muscleGroup[counter] %>" readonly>
-  <input type="text" name="activity" list="activities" class="histElt" value="<%= entryOutput.activity[counter] %>" readonly>
-</div>
-
-<div class="lblRow col3 histLook">
-  <label for="weight">Weight</label>
-  <label for="sets">Sets</label>
-  <label for="reps">Reps</label>
-</div>
-<div class="row col3">
-  <input name="weight" class="histElt" value="Weight: <%= entryOutput.weight[counter] %>" readonly>
-  <input name="sets" class="histElt" value="Sets: <%= entryOutput.sets[counter] %>" readonly>
-  <input name="reps" class="histElt" value="Reps: <%= entryOutput.reps[counter] %>" readonly>
-</div>
-<!-- comments are hidden if no value is stored -->
-<label for="comments" class="lblRow histLook">Comments</label>
-<textarea name="comments" rows="2" 
-<% if(entryOutput.comments) { %> 
-  class="histElt" 
-<% } else { %> 
-  class="histElt hidden" 
-<% } %> 
-readonly><% if(entryOutput.comments) { %>Comments: <%= entryOutput.comments[counter] %><% } %></textarea>
