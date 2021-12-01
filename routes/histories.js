@@ -38,20 +38,19 @@ router.get('/', async (req, res) => {
 router.put('/:id', async(req, res) => {
 
   try {
-    console.log(req.body.entryDate, req.body.muscleGroup,req.body.activity, req.body.weight, req.body.sets, req.body.reps, req.body.comments, req.body.sleepHours, req.body.breakfast, req.body.lunch, req.body.dinner);
-    // await histEntryModel.updateOne({_id: req.params.id}, {
-    //   entryDate: req.body.entryDate,
-    //   muscleGroup: req.body.muscleGroup,
-    //   activity: req.body.activity,
-    //   weight: req.body.weight,
-    //   sets: req.body.sets,
-    //   reps: req.body.reps,
-    //   comments: req.body.comments
-    //   sleepHours: req.body.sleepHours,
-    //   breakfast: req.body.breakfast,
-    //   lunch: req.body.lunch,
-    //   dinner: req.body.dinner
-    // })
+    await histEntryModel.updateOne({_id: req.params.id}, {
+      entryDate: req.body.entryDate,
+      muscleGroup: req.body.muscleGroup,
+      activity: req.body.activity,
+      weight: req.body.weight,
+      sets: req.body.sets,
+      reps: req.body.reps,
+      comments: req.body.comments,
+      sleepHours: req.body.sleepHours,
+      breakfast: req.body.breakfast,
+      lunch: req.body.lunch,
+      dinner: req.body.dinner
+    })
   } catch (error) {
     console.log(error);
   }

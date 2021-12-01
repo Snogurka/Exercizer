@@ -36,40 +36,25 @@ function displaySettings() {
 
 }
 
-//response to a roll up / roll down: add/remove class hidden to all except 1st  children of the clicked button's parent element-section; the clicked button is the only remaining visible element, thus the height of the parent section is reduced to min-height set in style, 2em;
-function displaySection (caller) {
+//response to toggle display buttons: hide/unhide workout/fuel sections
+function sectDisplay (caller) {
 
-  //not done yet
+  //for future
   //chart elements have inline styling, thus, instead of using "hidden" class, to not display chart section, height and opacity are used
-  // if (caller.innerText==="-") {
-  //   caller.parentElement.style.height = "2.5em";
-  //   Array.from(caller.parentElement.children).forEach(x => 
-  //     x.classList.contains("roll")?
-  //     x.innerText = "+":
-  //     x.style.opacity="0");
-  //     return;
-  // } else {
-  //   caller.parentElement.style.height = "182px";
-  //   Array.from(caller.parentElement.children).forEach(x => 
-  //     x.classList.contains("roll")?
-  //     x.innerText = "-":
-  //     x.style.opacity = "1");
-  //     graphIt();
-  //     return;
-  // }  
 
-  //the following functionality hides/unhides clicked sections, disabled for now as it's not needed and just clutters the screen
-  // if (caller.innerText==="-") {
-  //   Array.from(caller.parentElement.children).forEach(x => 
-  //     x.classList.contains("roll")?
-  //     x.innerText = "+":
-  //     x.classList.add("hidden"));
-  // } else {
-  //   Array.from(caller.parentElement.children).forEach(x => 
-  //     x.classList.contains("roll")?
-  //     x.innerText = "-":
-  //     x.classList.remove("hidden"));
-  // }
+  const classPrefix = caller.classList.contains("fuelDisplayBtn")||caller.classList.contains("fuelHideBtn")?"fuel":"workout";
+  
+
+  if (caller.classList.contains(classPrefix+"DisplayBtn")) {
+    caller.classList.replace(classPrefix+"DisplayBtn", classPrefix+"HideBtn");
+
+    Array.from(document.getElementsByClassName(classPrefix+"Entry")).forEach(x=>x.classList.add("hidden"));
+
+  } else {
+    caller.classList.replace(classPrefix+"HideBtn", classPrefix+"DisplayBtn");
+
+    Array.from(document.getElementsByClassName(classPrefix+"Entry")).forEach(x=>x.classList.remove("hidden"));
+  }
 }
 
 //subsection of fields for multiple entries on a single day - a click on "more" subsections button
@@ -91,25 +76,27 @@ function btnBackClk() {
   window.location.replace(urlRoot());
 }
 
-//show or hide fields for editing historical entry
+//enable field editing for historical entry
 function btnEditClk(tgt) {
 
   //if "edit ✏️" is clicked, the editing input fields and their labels need to get class visible, otherwise, if "cancel ⨉" is clicked, give them class hidden
   if (tgt.innerText === "✏️") {
   
-    //animated increase in labels height and opacity via adding lblVisible class
-    Array.from(tgt.parentElement.parentElement.parentElement.getElementsByClassName("histLook")).forEach(x => x.classList.add("lblVisible"));
+    //animated increase in labels opacity via adding lblVisible class
+    Array.from(tgt.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("histLook")).forEach(x => x.classList.add("lblVisible"));
 
-    //remove all hidden classes (input entryDate, buttons put and delete); no animation;
-    Array.from(tgt.parentElement.parentElement.getElementsByClassName("hidden")).forEach(x => {
-      x.classList.remove("hidden");
-      x.classList.add("unhidden")});
+    //remove all except "less entrries" hidden classes from the selected entry form, thus unhiding input entryDate, buttons put and delete, possibly fuel section; the "less entries" "more hidden" button needs to stay hidden for the first subentry; no animation; 
+    Array.from(tgt.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("hidden")).forEach(x => {
+      if(x.innerText!="-☝") x.classList.replace("hidden", "unhidden");
+    });
     
-    //hide the date field used for pretty display, replacing with the input field with usable, properly formatted date (handled above); no animation;
+    //hide the date field used for pretty display, replacing it with the input field with usable, properly formatted date (handled above); no animation;
     tgt.parentElement.parentElement.getElementsByClassName("displayDate")[0].classList.add("hidden");
+    //also hide entry toggle buttons
+    Array.from(tgt.parentElement.parentElement.getElementsByClassName("toggleBtn")).forEach(x => x.classList.add("hidden"));
 
     //make input fields editable and of appropriate format by removing histElt class, whose history viewing looks are set in css
-    Array.from(tgt.parentElement.parentElement.parentElement.getElementsByClassName("histElt")).forEach(x => {
+    Array.from(tgt.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("histElt")).forEach(x => {
       x.removeAttribute("readonly");
       x.classList.remove("histElt");
       //add the editing... class so that elements can be located for canceling
@@ -119,39 +106,33 @@ function btnEditClk(tgt) {
       if (nm === "entryDate") {
         x.type = "date";
       } else if (["weight", "sets", "reps", "sleepHours"].includes(nm)) {
-        x.value = parseInt(x.value.toString().split(":")[1].trim());
         x.type = "number";
-      } else if (["breakfast", "lunch", "dinner", "comments"].includes(nm)) {
-        x.value = x.value.toString().split(":")[1].trim();
-      }
+        x.step = "0.1";
+      } 
     });
     tgt.innerText = "⨉";
   } else {
-    //animated decrease in labels height and opacity
-    Array.from(tgt.parentElement.parentElement.parentElement.getElementsByClassName("histLook")).forEach(x => x.classList.remove("lblVisible"));
+    //animated decrease in labels opacity
+    Array.from(tgt.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("histLook")).forEach(x => x.classList.remove("lblVisible"));
 
     //hide unhidden input entryDate, buttons put and delete; no animation;
-    Array.from(tgt.parentElement.parentElement.getElementsByClassName("unhidden")).forEach(x => {
+    Array.from(tgt.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("unhidden")).forEach(x => {
       x.classList.add("hidden");
       x.classList.remove("unhidden");
     });
-    //unhide the date field used for pretty display, hide the input field
+
+    //unhide the date field used for pretty display
     tgt.parentElement.parentElement.getElementsByClassName("displayDate")[0].classList.remove("hidden");
+    //also unhide entry toggle buttons
+    Array.from(tgt.parentElement.parentElement.getElementsByClassName("toggleBtn")).forEach(x => x.classList.remove("hidden"));
 
     //make input fields ineditable and of appropriate format; not animated;
-    Array.from(tgt.parentElement.parentElement.parentElement.getElementsByClassName("editingHistElt")).forEach(x => {
+    Array.from(tgt.parentElement.parentElement.parentElement.parentElement.getElementsByClassName("editingHistElt")).forEach(x => {
       x.readOnly = true;
       x.removeAttribute("type");
       x.classList.add("histElt");
       x.classList.remove("editingHistElt");
       let nm = x.getAttribute("name");
-      // if (!["entryDate", "displayDate"].includes(nm)) {
-      if (["weight", "sets", "reps", "breakfast", "lunch", "dinner", "comments"].includes(nm)) {
-        x.value = x.name.charAt(0).toUpperCase() + x.name.slice(1) + ": " + x.value;
-      } 
-      // else if (["breakfast", "lunch", "dinner", "comments"].includes(nm)) {
-      //   x.value = x.value.toString().split(":")[1].trim();
-      // }
     });
     tgt.innerText = "✏️";
   }
@@ -206,6 +187,65 @@ function pullHistory(tgt) {
     window.location.replace(`${urlRoot()}history?dateFrom=${tgt.value}`);
   } else {
     window.location.replace(`${urlRoot()}history?dateFrom=${document.getElementById("dateFrom").value}&dateTo=${tgt.value}`);
+  }
+}
+
+//emoji buttons allow quick muscle and activity entry; on click of the first one, that's next to date, display others;
+//todo: populate other buttons with the top 4/5 most used, based on user's entries; save user's last preference (hidden or shown emojis)
+function showEmojis(tgt) {
+  if (tgt.style.filter === "grayscale(0)") {
+    tgt.style.filter = "grayscale(1)";
+    document.getElementById("emojRow").classList.add("hidden")
+  } else {
+    tgt.style.filter = "grayscale(0)";
+    document.getElementById("emojRow").classList.remove("hidden")
+  };
+}
+
+//quick muscle and activity entry via emoji buttons
+function emojResponse(tgt) {
+  
+  //the input fields' value, used to white out the fields when an emoji is disselected
+  let inputVal = null;
+
+  //toggle the grayness of emoji shortcuts
+  if (tgt.style.filter === "grayscale(0)") {
+    tgt.style.filter = "grayscale(1)";
+    inputVal = " ";
+  } else {
+    //when removing gray filter, gray-out other buttons
+    Array.from(tgt.parentElement.children).forEach( x => {
+      x.style.filter = "grayscale(1)";
+    })
+    tgt.style.filter = "grayscale(0)";
+    inputVal = null;
+  }
+
+  switch (tgt.innerText) {
+    case "💪":
+      tgt.parentElement.parentElement.parentElement.getElementsByTagName("input")[0].value = inputVal || "Bicepts";
+      break;
+    case "🦵":
+      tgt.parentElement.parentElement.parentElement.getElementsByTagName("input")[0].value = inputVal || "Legs";
+      break;
+    case "🫀":
+      tgt.parentElement.parentElement.parentElement.getElementsByTagName("input")[0].value = inputVal || "Heart";
+      break;
+    case "🧠":
+      tgt.parentElement.parentElement.parentElement.getElementsByTagName("input")[0].value = inputVal || "Brain";
+      break;
+    case "🏊‍♂️":
+      tgt.parentElement.parentElement.parentElement.getElementsByTagName("input")[1].value = inputVal || "Swimming";
+      break;
+    case "🏋️‍♀️":
+      tgt.parentElement.parentElement.parentElement.getElementsByTagName("input")[1].value = inputVal || "Bench";
+      break;
+    case "🤼":
+      tgt.parentElement.parentElement.parentElement.getElementsByTagName("input")[1].value = inputVal || "Wrestling";
+      break;
+    case "🏈":
+      tgt.parentElement.parentElement.parentElement.getElementsByTagName("input")[1].value = inputVal || "Football";
+      break;
   }
 }
 

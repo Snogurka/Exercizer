@@ -1,25 +1,21 @@
-<!-- fuel: sleep and food entry section -->
-<section class="foodSleepEntry">
-<!-- to be removed hide/unhide section -->
-  <!-- <button class="roll" type="button" onclick="displaySection(event.target)">-</button> -->
-  <div class="lblRow col3">
-    <label for="sleepHours">Sleep Hours</label>
+<!-- fuel: sleep and fuel entry section -->
+<section class="fuelEntry">
+  <div class="row">
+    <label for="sleepHours" class="col4">Sleep Hours</label>
+    <input type="number" step="0.1" name="sleepHours" min="0"  class="col2">
+    <!-- <div class="col2"></div> -->
+    <label class="col6"></label>
   </div>
-  <div class="row col3">
-    <input type="number" step="0.01" name="sleepHours" min="0" class="newElt">
+  <div class="row">
+    <label for="breakfast" class="col4">Breakfast</label>
+    <input name="breakfast" class="col8">
   </div>
-
-
-  <div class="lblRow col3">
-    <label for="breakfast">Breakfast</label>
-    <label for="lunch">Lunch</label>
-    <label for="dinner">Dinner</label>
+  <div class="row">
+    <label for="lunch" class="col4">Lunch</label>
+    <input name="lunch" class="col8">
   </div>
-  
-  <div class="row col3">
-    <input name="breakfast">
-    <input name="lunch">
-    <input name="dinner">
+  <div class="row">
+    <label for="dinner" class="col4">Dinner</label>
+    <input name="dinner" class="col8">
   </div>
 </section>
-<br>

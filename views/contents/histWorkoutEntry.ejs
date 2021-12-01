@@ -1,32 +1,42 @@
-<!-- entry section -->
+<!-- history workout entry section -->
 <!-- entryOutput comes from history.ejs -->
 <div class="workoutSubEntry">
-  <div class="lblRow col2 histLook">
-    <label for="muscleGroup">Muscle Group</label>
-    <label for="activity">Activity</label>
-  </div>
-  <div class="row col2">
-    <input type="text" name="muscleGroup" class="histElt" value="<%= entryOutput.muscleGroup[counter] %>" readonly>
-    <input type="text" name="activity" list="activities" class="histElt" value="<%= entryOutput.activity[counter] %>" readonly>
+  
+  <div class="row">
+    <label for="muscleGroup" class="col4 histLook">Muscle Group:&nbsp;</label> 
+    <input type="text" name="muscleGroup" class="col3 histElt" value="<%= entryOutput.muscleGroup[counter] %>" readonly>
+    
+    <label for="activity" class="col2 histLook">Activity:&nbsp;</label>
+    <input type="text" name="activity" class="col3 histElt" value="<%= entryOutput.activity[counter] %>" readonly>
   </div>
 
-  <div class="lblRow col3 histLook">
-    <label for="weight">Weight(lbs)</label>
-    <label for="sets">Sets</label>
-    <label for="reps">Reps</label>
+  <div class="row">
+    <label for="weight" class="col3 histLook">Weight(lbs):&nbsp;</label>
+    <input class="col2 histElt" value="<%= entryOutput.weight[counter] %>" name="weight" readonly>
+
+    <label for="sets" class="col1_5 histLook">Sets:&nbsp;</label>
+    <input class="col2 histElt" value="<%= entryOutput.sets[counter] %>" name="sets" readonly>
+
+    <label for="reps" class="col1_5 histLook">Reps:&nbsp;</label>
+    <input class="col2 histElt" value="<%= entryOutput.reps[counter] %>" name="reps" readonly>
   </div>
-  <div class="row col3">
-    <input name="weight" class="histElt" value="Weight(lbs): <%= entryOutput.weight[counter] %>" readonly>
-    <input name="sets" class="histElt" value="Sets: <%= entryOutput.sets[counter] %>" readonly>
-    <input name="reps" class="histElt" value="Reps: <%= entryOutput.reps[counter] %>" readonly>
-  </div>
+
   <!-- comments are hidden if no value is stored -->
-  <label for="comments" class="lblRow histLook">Comments</label>
-  <textarea name="comments" rows="2" 
+  <div 
   <% if(entryOutput.comments[counter].length) { %> 
-    class="histElt" 
+    class="row">
   <% } else { %> 
-    class="histElt hidden" 
+    class="row hidden">
   <% } %> 
-  readonly><% if(entryOutput.comments) { %>Comments: <%= entryOutput.comments[counter] %><% } %></textarea>
+    <label for="comments" class="col3 histLook">Comments:</label>
+    <textarea name="comments" rows="2" class="col9 histElt"><%= entryOutput.comments[counter] %></textarea>
+  </div>
+
+  <hr class="hidden">
+  <!-- a more or less buttons section under a line -->
+  <div class="row hidden">
+    <button class="more col6" type="button" onclick="moreEntries(event.target)">+☟</button>
+    <button class="more col6 hidden" type="button" onclick="lessEntries(event.target)">-☝</button>
+  </div>
+
 </div>

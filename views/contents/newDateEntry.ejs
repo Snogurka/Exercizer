@@ -1,10 +1,10 @@
 <!-- new entry date section -->
 <section class="workoutEntry">
-  <div class="lblRow col2">
-    <label for="entryDate">New Date</label>
-  </div>
-  <div class="row col2">
-    <input type="date" name="entryDate" dateonly=true required onblur="checkDateUniqueness(event.target)">
+  <div class="row">
+    <label for="entryDate" class="col4">New Date</label>
+    <input type="date" name="entryDate" class="col4" dateonly=true required onblur="checkDateUniqueness(event.target)">
+    <div class="col3"></div>
+    <button type="button" class="col1 emoj" onclick="showEmojis(event.target)">😎</button>
   </div>
 
 <!-- to warn user of existing record dates, pull recorded dates  into a hidden array; todo: sometime later, limit the dates in calendar to only those that have entries -->

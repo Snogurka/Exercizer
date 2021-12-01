@@ -1,22 +1,28 @@
-<form method="post" action="/history/:?_method=put">
-  <!-- history pull -->
-  <section>
-    <div class="lblRow col2">
-      <label for="dateFrom">History</label>
-      <label for="dateTo" id="lblDateTo">...to</label>
-    </div>
-    <div class="row col2">
-      <input type="date" name="dateFrom" id="dateFrom" oninput="pullHistory(event.target)" value="<%= startDate %>">
-      <input type="date" name="dateTo" id="dateTo" oninput="pullHistory(event.target)" value="<%= endDate %>">
-    </div>
-  </section>
-  <%# if(endDate) { %>
-    <%#- include("contents/chart.ejs") %>
-  <%# } %>
+<!-- history pull -->
+<div class="lblRow">
+  <div class="col3"></div>
+  <label for="dateFrom" class="col3">History</label>
+  <div class="col1"></div>
+  <label for="dateTo" id="lblDateTo" class="col3">...to</label>
+  <div class="col2"></div>
+</div>
+
+<div class="row">
+  <button type="button" class="more toggleBtn workoutDisplayBtn" onclick="sectDisplay(event.target)"></button>
+  <input type="date" name="dateFrom" id="dateFrom" class="col4" oninput="pullHistory(event.target)" value="<%= startDate %>">
+
+  <input type="date" name="dateTo" id="dateTo" class="col4" oninput="pullHistory(event.target)" value="<%= endDate %>">
+  <button type="button" class="more toggleBtn fuelDisplayBtn" onclick="sectDisplay(event.target)"></button>
+  </div>
+</div>
+<%# if(endDate) { %>
+  <%#- include("contents/chart.ejs") %>
+<%# } %>
 <!-- outputSet comes from histories.js -->
-  <% outputSet.forEach(entry => { %>
+<% outputSet.forEach(entry => { %>
+  <form method="post" action="/history/">
     <%- include("contents/histDateEntry.ejs", {entryOutput: entry}) %>
     <%- include("contents/histFuelEntry.ejs", {entryOutput: entry}) %>
-  <% }) %>
-  <%- include("contents/editBtnSect.ejs") %>
-</form>
+  </form>
+<% }) %>
+<%- include("contents/editBtnSect.ejs") %>

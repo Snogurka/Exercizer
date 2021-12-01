@@ -1,33 +1,28 @@
 <!-- entryOutput comes from history.ejs -->
-<!-- meal and sleep entry section, hidden if no values are stored -->
+<!-- meal and sleep entry section are hidden, if there are no values stored for them -->
 <section 
 <% if(entryOutput.sleepHours || entryOutput.breakfast || entryOutput.lunch || entryOutput.dinner ) { %> 
-  class="foodSleepEntry" 
+  class="fuelEntry" 
 <% } else { %> 
-  class="foodSleepEntry hidden" 
-<% } %>>
-<!-- to be removed hide/unhide section -->
-  <!-- <button class="roll" type="button" onclick="displaySection(event.target)">-</button> -->
-  <div class="lblRow col3 histLook">
-  <label for="sleepHours">Sleep Hours</label>
-  </div>
-  <div class="row col3">
-  <input name="sleepHours" 
-  <% if(entryOutput.sleepHours) { %> 
-    class="histElt" 
-  <% } else { %> 
-      class="histElt hidden" 
-  <% } %>
-  value="Sleep: <%= entryOutput.sleepHours %> hrs" readonly>
-  </div>
-  <div class="lblRow col3 histLook">
-    <label for="breakfast">Breakfast</label>
-    <label for="lunch">Lunch</label>
-    <label for="dinner">Dinner</label>
-  </div>
-  <div class="row col3">
-    <input name="breakfast" class="histElt" value="B: <%= entryOutput.breakfast %>" readonly>
-    <input name="lunch" class="histElt" value="L: <%= entryOutput.lunch %>" readonly>
-    <input name="dinner" class="histElt" value="D: <%= entryOutput.dinner %>" readonly>
-  </div>
+  class="fuelEntry hidden" 
+<% } %>
+>
+
+<div class="row">
+  <label for="sleepHours" class="col3 histLook">Sleep Hours:</label>
+  <input name="sleepHours" class="col2 histElt" value="<%= entryOutput.sleepHours %>" readonly>
+  <label class="col7"></label>
+</div>
+<div class="row">
+  <label for="breakfast" class="col3 histLook">Breakfast:</label>
+  <input name="breakfast" class="col9 histElt" value="<%= entryOutput.breakfast %>" readonly>
+</div>
+<div class="row">
+  <label for="lunch" class="col3 histLook">Lunch:</label>
+  <input name="lunch" class="col9 histElt" value="<%= entryOutput.lunch %>" readonly>
+</div>
+<div class="row">
+  <label for="dinner" class="col3 histLook">Dinner:</label>
+  <input name="dinner" class="col9 histElt" value="<%= entryOutput.dinner %>" readonly>
+</div>
 </section>

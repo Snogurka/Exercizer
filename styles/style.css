@@ -1,8 +1,8 @@
 :root {
   --main-color: dimgray;
   /* --main-color: rgb(65,65,65); */
-  --primary-color: blue;
-  --secondary-color: red;
+  --primary-color: rgb(0, 0, 128); /*navy*/
+  --secondary-color: rgb(230, 0, 0); /*red*/
   --main-bg-color: snow;
   --blue-bg-color: #d7e4f7;
   --red-bg-color: #fce6e0; 
@@ -15,7 +15,7 @@
 body {
   background-color: var(--main-bg-color);
   color: var(--primary-color);
-  font-family: system-ui;
+  font-family: Baskerville, system-ui;
   font-weight: normal;
   min-height: 100%;
 }
@@ -30,15 +30,23 @@ h1 {
 }
 h2 {
   font-size: 100%;
+  margin-bottom: 2%;
+}
+
+form {
+  margin-top: 1em;
 }
 
 /***************************************************/
 /* buttons */
+button {
+  box-shadow: 0 1px 1px var(--main-color);
+}
+
 #btnClear, #btnSave, #alertMsg button {
   position: relative;
   height: 2.5em;
   width: 4em;
-  margin: 0 10%;
   color: var(--main-bg-color);
   font-size: medium;
   border-style: outset;
@@ -51,43 +59,63 @@ h2 {
   float: right;
   background-color: var(--primary-color);
   border: 1px solid var(black);
-  box-shadow:  -1px 1px var(black),
-  -2px 2px var(--secondary-color);
+  /* box-shadow:  -1px 1px var(black),
+  -2px 2px var(--secondary-color); */
 }
-
+.emoj {
+  filter: grayscale(1); 
+}
 /***************************************************/
-/* buttons for toggling section display */
-/* .roll,  */
+/* buttons for section display */
 .more, .settings {
-  /* position: absolute; */
   right: 2.5vw;
   height: 2em;
   background: none;
   /* above sections */
   z-index: 2;
 }
-/* .roll {
-  margin-top: -3px;
-  width: 2em; 
-  border: 0.5px solid var(--main-color);
-} */
-/* a button for additional workouts for the same day */
+/* additional workouts for the same day button*/
 .more {
-  transition-property: all;
-  transition-duration: 200ms;
+  /* float: right; */
   width: 3em; 
   color: var(--main-color);
 }
+.toggleBtn {
+  float: right;
+  margin: 1vw 2.5vw;
+  filter: grayscale(0.5);
+  opacity: 0.3;
+  transition: all;
+  transition-duration: 1s;
+  width: 1.5em;
+  height: 1.5em;
+  /* border-radius: 50%; */
+}
+.workoutDisplayBtn {
+  background: linear-gradient(35deg, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 50%),
+  linear-gradient(141.5deg, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 50%),
+  linear-gradient(35deg, rgba(0,0,128,.8), rgba(0,0,128,0) 50%),
+  linear-gradient(220deg, rgba(0,0,128,.8), rgba(0,0,128,0) 50%);
+}
+.fuelDisplayBtn {
+  background: linear-gradient(35deg, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 50%),
+  linear-gradient(141.5deg, rgba(255,255,255,.5) 50%, rgba(255,255,255,0) 50%),
+  linear-gradient(35deg, rgba(230,0,0,.8), rgba(230,0,0,0) 50%),
+  linear-gradient(220deg, rgba(230,0,0,.8), rgba(230,0,0,0) 50%);
+}
+.workoutHideBtn{
+  background: linear-gradient(rgba(0,0,128,1) 25%, rgba(255,255,255,0.5) 50%, rgba(0,0,128,1)75%);
+}
+.fuelHideBtn {
+  background: linear-gradient(rgba(230,0,0,1) 25%, rgba(255,255,255,0.5) 50%, rgba(230,0,0,1)75%);
+}
+
 .editingButtons {
   display: flex;
-  flex-direction: row;
+  flex-direction: row-reverse;
   justify-content: flex-end;
 }
-/* styling for the date row of history view */
-.dateShade {
-  box-shadow: -2px -1px 10px var(--main-color);
-  border-radius: 5px 0 0 5px;
-}
+
 /* settings include login, themes */
 .settings {
   position: absolute;
@@ -134,6 +162,9 @@ h2 {
   color: var(--main-color);
 }
 
+#dateFromLbl, #settingsMenu li  {
+  margin-left: 0.5em;
+}
 #dateFromLbl, #alertMsg, #settingsMenu li {
   color: var(--main-color);
   font-weight: normal;
@@ -141,6 +172,10 @@ h2 {
 }
 #dateFrom, #dateTo {
   border: 0.5px solid var(--main-color);
+  margin: 2px 0 0 0;
+  display: inline-block;
+  text-align: center;
+  padding-top: 5px;
 }
 
 /***************************************************/
@@ -149,7 +184,7 @@ section {
   width: 98vw;
   min-height: 2em;
   margin: 0 1vw;
-  padding: 1vw;
+  padding: 1em 1vw;
   /* border: 0.5px solid; */
   z-index: 1; /* under the roll button */
 }
@@ -159,80 +194,139 @@ section {
   background-color: var(--blue-bg-color);
 }
 .workoutSubEntry {
-  border-radius: 5px 5px 0 5px;
+  border-radius: 5px;
   /* todo: need a border that dissappears towards top left corner */
-  box-shadow: -0px -0px 2px var(--main-color);  
+  box-shadow: -0px -0px 2px var(--main-color);
+  margin-top: 5px;
 }
-.foodSleepEntry {
+.fuelEntry {
   background-color: var(--red-bg-color);
-  color: var(--secondary-color);  
+  color: var(--secondary-color);
 }
 #buttonSection {
   height: 3em;
-  margin: 5% 20%;
+  margin: 2% 20%;
 }
 
 /* class histElt, used for displaying input fields in the history view */
 .histElt {
+  color: black;
+  background: transparent;
   border: none;
+  text-align: left;
+  display: inline-block;
 }
-input.histElt {
-  height: 1.2em;
-  /* overflow-y: visible;
-  overflow-wrap: break-word; */
+
+textarea.histElt {
+  padding-top: 0.5em;
 }
 .workoutEntry .histElt {
   background-color: var(--blue-bg-color);
 }
-.foodSleepEntry .histElt {
+.fuelEntry .histElt {
   background-color: var(--red-bg-color);
 }
 
 /* used in functionality.js for animated display of labels */
 .histLook {
-  color: var(--main-color);
+  /* color: var(--main-color); */
   font-style: italic;
-  margin-top: 5px;
   font-weight: normal;
-  height: 0;
-  opacity: 0;
+  padding-top: 0;
+  text-align: right;
+  /* height: 0; */
+  opacity: 0.7 ;
   transition-property: all;
   transition-duration: 200ms;
   transition-timing-function: ease-in-out;
 }
 .lblVisible {
-  margin-top: 1em;
-  height: 1.1em;
+  /* margin-top: 1em; */
+  /* height: 1.1em; */
   opacity: 1;
 }
 
 /***************************************************/
 /* section rows: labels and inputs */
+/* lblRow is used in history page only */
 .lblRow {
-  margin-top: 0.5em;
-  padding-left: 5px;
-  /* height: 2em; */
+  padding-left: 0.5em;
   align-items: center;
+  font-style: italic;
+  margin-bottom: -5px;
 }
 .row, .lblRow {
   width: 100%;
   display: flex;
+  justify-content: space-between;
 }
-.col2, .col3, .editingButtons {
-  column-gap: 2%;
+.row {
+  padding: 2px 0;
 }
-.col2 > * {
-  width: 49%;
+.row > label {
+  padding-top: 4px;
+  padding-left: 0.5em;
+  text-align: left;
 }
-.col3 > label, .col3 > input {
-  width: 32%;
+.col1 {
+  width: calc(100%/12);
+}
+.col1_5 {
+  width: calc(100%*1.5/12);
+}
+.col2 {
+  width: calc(100%/6);
+}
+.col2_5 {
+  width: calc(100%*2.5/12);
+}
+.col2_75 {
+  width: calc(100%*2.75/12);
+}
+.col3 {
+  width: calc(100%/4);
+}
+.col4 {
+  width: calc(100%/3);
+}
+.col5 {
+  width: calc(100%*5/12);
+}
+.col6 {
+  width: calc(100%/2);
+}
+.col7 {
+  width: calc(100%*7/12);
+}
+.col8 {
+  width: calc(100%*8/12);
+}
+.col9 {
+  width: calc(100%*9/12);
+}
+.col10 {
+  width: calc(100%*10/12);
+}
+.col11 {
+  width: calc(100%*11/12);
+}
+.col12 {
+  width: calc(100%);
+}
+
+/* history view date row shading, has to be after row*/
+.dateShade {
+  box-shadow: -2px -1px 10px var(--main-color);
+  border-radius: 5px;
+  width: 98vw;
+  margin: 0 1vw;
 }
 /***************************************************/
 button, input, textarea {
   font-family: inherit;
   font-size: 100%;
   border-radius: 5px;
-  height: 32px;
+  height: 1.8em;
   border: 1px solid var(--main-bg-color);
 }
 input, textarea {
@@ -241,16 +335,9 @@ input, textarea {
   padding-left: 5px;
   text-align: left; 
 }
-input[type="date"] {
-  width: 47.5vw;
-  vertical-align: bottom;
-}
-/* input[type="number"] {
-  padding-left: 5px;
-} */
+
 textarea {
-  width: 100%;
-  padding-top: 10px;
+  padding-top: 5px;
   resize: vertical;
 }
 
@@ -259,10 +346,8 @@ footer {
   font-size: smaller;
   font-weight: normal;
   position: relative;
-  /* bottom: 0; */
   padding: 2vw;
   height: 2em;
-  /* margin-top: -2em; */
 }
 
 /* #chart, #chartDisplay,  */
@@ -275,19 +360,12 @@ footer {
 /* size restriction for desktop */
 @media only screen and (min-width: 900px) { 
 
-    section {
+    section, .dateShade {
       width: 60%;
       margin: auto 20%;
     }
-    /* .roll,  */
     .more {
       right: 21vw;
-    }
-    .col2 > label, .col2 > input {
-      width: 49%;
-    }
-    .col3 > label, .col3 > input {
-      width: 31.8%;
     }
     input[type="date"] {
       width: 28.2vw;
